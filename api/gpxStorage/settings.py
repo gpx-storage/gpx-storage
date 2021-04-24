@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "django_otp",
     "django_otp.plugins.otp_totp",
+    "drf_yasg",
     "auth_api",
 ]
 
@@ -60,6 +61,11 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "gpxStorage.custom_auth.CustomTokenAuthentication",
     ]
+}
+
+SWAGGER_SETTINGS = {
+    "SHOW_REQUEST_HEADERS": True,
+    "SECURITY_DEFINITIONS": {"Bearer": {"type": "apiKey", "name": "Authorization", "in": "header"}},
 }
 
 ROOT_URLCONF = "gpxStorage.urls"
