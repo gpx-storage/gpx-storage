@@ -93,6 +93,13 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 }
 
+
+def OTP_name_gen(TOTPDevice):
+    return f"GPX-Storage ({TOTPDevice.user.email})"
+
+
+OTP_TOTP_ISSUER = OTP_name_gen
+
 ROOT_URLCONF = "gpxStorage.urls"
 
 TEMPLATES = [
