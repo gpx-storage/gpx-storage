@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django_otp",
     "django_otp.plugins.otp_totp",
     "drf_yasg",
+    "corsheaders",
     "auth_api",
     "gpx",
 ]
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -100,6 +102,10 @@ def OTP_name_gen(TOTPDevice):
 
 
 OTP_TOTP_ISSUER = OTP_name_gen
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"(?:^|[ \t])((https?:\/\/)?(?:localhost)(:\d+)?(\/\S*)?)",  # allow localhost
+]
 
 ROOT_URLCONF = "gpxStorage.urls"
 
