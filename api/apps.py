@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class GpxConfig(AppConfig):
+class ApiConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'gpx'
+    name = 'api'

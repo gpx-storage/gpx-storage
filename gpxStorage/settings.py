@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "corsheaders",
     "auth_api",
-    "gpx",
+    "api",
 ]
 
 MIDDLEWARE = [
