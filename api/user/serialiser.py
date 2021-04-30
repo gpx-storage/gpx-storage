@@ -1,12 +1,9 @@
-import sys
-
 import django.contrib.auth.password_validation as validators
+from api.user.fonctions import send_email_activation_to_new_user
 from auth_api.models import Profile
-from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.core import exceptions
-from rest_framework import routers, serializers, viewsets
-from rest_framework.fields import CharField, EmailField
+from rest_framework import serializers
 
 
 # Serializers define the API representation.
@@ -50,10 +47,21 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = ["id", "user", "is_two_factor_enabled"]
 
+
+class ProfileCreationSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    redirect_to = serializers.URLField(required=False)
+
+    class Meta:
+        model = Profile
+        fields = ["id", "user", "is_two_factor_enabled", "redirect_to"]
+
     def create(self, validated_data):
         u = User.objects.create_user(
             username=validated_data["user"]["username"],
             email=validated_data["user"]["email"],
             password=validated_data["user"]["password"],
+            is_active=False,
         )
+        send_email_activation_to_new_user(self.context["request"], u, validated_data["redirect_to"])
         return Profile.objects.create(user=u)
